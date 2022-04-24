@@ -1,0 +1,139 @@
+@import url(./globals.css);
+
+body {
+  margin: 0%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: var(--white);
+  width: 100%;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "video chat";
+}
+
+.video-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.video-webcam {
+  width: 75%;
+  aspect-ratio: 16/9;
+  place-self: center;
+  max-width: 720px;
+  max-height: 440px;
+  border-radius: 30px;
+  background-color: var(--loading-black);
+}
+
+.video-participants {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 50%;
+  height: 100%;
+}
+
+.video-participants-card {
+  width: 200px;
+  margin: 0 10px;
+  height: 200px;
+  background-color: #fe2e2e;
+  border-radius: 20px;
+}
+
+.chat-container {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  width: 350px;
+  padding: 20px;
+  background-color: #f5f7fb;
+  border-radius: 15px;
+}
+
+.chat-messages {
+  height: 100%;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.chat-textarea {
+  width: 100%;
+  height: 3rem;
+  padding: 10px 20% 10px 10px;
+  margin: 0;
+  resize: none;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 1px solid #d2d2d2;
+}
+
+.chat-input button {
+  height: 80%;
+  width: 3rem;
+  position: absolute;
+  right: 2%;
+  outline: none;
+  border: none;
+  background-color: #ffcc1a;
+  border-radius: 10px;
+}
+
+.chat-input button:active {
+  background-color: #d8ae16;
+}
+
+.chat-input button img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .video-participants {
+    height: 100%;
+    padding: 20px 0;
+    overflow-y: scroll;
+  }
+
+  .video-participants-card {
+    width: 200px;
+    height: 20%;
+    margin: 10px 0;
+    background-color: #ffcc1a;
+  }
+}
+/* Extra extra large devices (extra large laptops and desktops, 1400px and up) */
+
+@media only screen and (min-width: 1400px) {
+  .video-participants {
+    gap: 10px;
+    width: 50%;
+    height: 100%;
+  }
+
+  .video-participants-card {
+    width: 200px;
+    background-color: #fe2e2e;
+  }
+}

@@ -21,14 +21,8 @@ async function connect({ username }) {
   room = await Twilio.Chat.Client.create(data.token);
   console.log(room);
   chatClient = room;
-  chatClient.getSubscribedChannels().then(joinGeneralChannel);
-
-  /* room = await Twilio.Video.connect(data.token);
-  room.participants.forEach(participantConnected);
-  room.on("participantConnected", participantConnected);
-  room.on("participantDisconnected", participantDisconnected);
-  connected = true;
-  updateParticipantCount(); */
+  await chatClient.getSubscribedChannels();
+  joinGeneralChannel();
 }
 
 connect({ username });
@@ -39,26 +33,32 @@ async function joinGeneralChannel() {
     const channel = await chatClient.getChannelByUniqueName("miduroom");
     generalChannel = channel;
     console.log("found general chat");
-    console.log(channel);
+    console.log(generalChannel);
     setupChannel();
   } catch (error) {
     console.log("could not find general chat");
-    const channel = await chatClient.createChannel({
+    const createGeneral = await chatClient.createChannel({
       uniqueName: "miduroom",
       friendlyName: "General Chat",
     });
     console.log("Created general channel");
-    console.log(channel);
-    generalChannel = channel;
+    console.log(createGeneral);
+    generalChannel = createGeneral;
     setupChannel();
   }
 }
 
 function setupChannel() {
-  generalChannel.join().then(function () {
-    console.log(`joined as ${username}`);
+  generalChannel.join().then(() => {
+    console.log("joined channel");
   });
   generalChannel.on("messageAdded", messageAddedToChannel);
+}
+
+function disconnect() {
+  generalChannel.leave().then(() => {
+    console.log("left channel");
+  });
 }
 
 function messageAddedToChannel(message) {
@@ -75,3 +75,5 @@ chatButton.addEventListener("click", () => {
   generalChannel.sendMessage(messageInput.value);
   messageInput.value = "";
 });
+
+window.addEventListener("beforeunload", disconnect);

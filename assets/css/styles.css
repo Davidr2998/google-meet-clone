@@ -1,7 +1,6 @@
 @import url("./globals.css");
 
 body {
-  background: #f0f0f0;
   font-family: system-ui;
   display: grid;
   place-content: center;

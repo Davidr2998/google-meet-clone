@@ -1,13 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Roboto:wght@300;400&display=swap");
 
 :root {
   --white: #ffffff;
   --black: #000000;
+  --grey: #bababa;
   --loading-black: #212121;
   --bg-primary: #f0f0f0;
+  --button-primary: #2ca0d9;
   --sm: 14px;
   --md: 16px;
   --lg: 18px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  padding: 0;
+  margin: 0;
+  color: var(--loading-black);
 }
 
 textarea {

@@ -1,7 +1,10 @@
 @import url("./globals.css");
 
 body {
-  background: #f0f0f0;
+  /*   background-image: url("../static/tmchat-bg.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
   font-family: system-ui;
   display: grid;
   place-content: center;

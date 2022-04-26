@@ -406,15 +406,20 @@
           <textarea
             class="chat-textarea"
             name=""
-            id=""
+            id="message-input"
             rows="3"
             maxlength="250"
           ></textarea>
-          <button>
+          <button id="chat-button">
             <img src="./static/send-icon.svg" alt="" />
           </button>
         </div>
       </div>
     </div>
+    <script
+      defer
+      src="https://media.twiliocdn.com/sdk/js/chat/releases/5.0.2/twilio-chat.js"
+    ></script>
+    <script defer src="./javascript/chat.js"></script>
   </body>
 </html>

@@ -31,7 +31,7 @@ $form.addEventListener("submit", async (e) => {
 
   const username = $userNameInput.value;
   if (!username) return alert("Please provide an username");
-
+  localStorage.setItem("username", username);
   $joinButton.disabled = true;
   $joinButton.innerText = "Connecting...";
 

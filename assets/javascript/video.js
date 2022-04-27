@@ -14,7 +14,6 @@ async function addLocalVideo() {
     "participant-container"
   );
   const track = await Twilio.Video.createLocalVideoTrack();
-  /* $localVideo.appendChild(track.attach()).classList.add("video-webcam"); */
   $localVideo
     .insertBefore(track.attach(), $participantContainer)
     .classList.add("video-webcam");
@@ -23,13 +22,7 @@ async function addLocalVideo() {
 addLocalVideo();
 
 const start = async () => {
-  if (connected) {
-    disconnect();
-    return;
-  }
-
   if (!username) return alert("Please provide an username");
-
   try {
     await connect({ username });
   } catch (e) {
@@ -71,7 +64,7 @@ function updateParticipantCount() {
   /* $count.innerHTML = `${meetingRoom.participants.size + 1} online users`; */
 }
 
-async function participantConnected(participant) {
+function participantConnected(participant) {
   const template = `<div id='participant-${participant.sid}' class="participant">
               <div class="participant-video"></div>
               <div class="participant-name">
@@ -79,7 +72,7 @@ async function participantConnected(participant) {
               </div>
             </div>`;
 
-  await $container.insertAdjacentHTML("beforeend", template);
+  $container.insertAdjacentHTML("beforeend", template);
 
   participant.tracks.forEach((localTrackPublication) => {
     const { isSubscribed, track } = localTrackPublication;
@@ -87,19 +80,27 @@ async function participantConnected(participant) {
   });
 
   participant.on("trackSubscribed", (track) => attachTrack(track, participant));
-  participant.on("trackUnsubscribed", (track) => track.detach());
+  participant.on("trackUnsubscribed", (track) => detachTrack(track));
   updateParticipantCount();
 }
 
-async function attachTrack(track, participant) {
+function attachTrack(track, participant) {
   const $video = $container.querySelector(
     `#participant-${participant.sid} .participant-video`
   );
 
-  console.log("TEST", $video);
   $video.appendChild(track.attach()).classList.add("participant-video");
 }
 
+async function detachTrack(track) {
+  await track.detach();
+  updateParticipantCount();
+}
+
 function participantDisconnected(participant) {
+  const participantVideo = document.querySelector(
+    `#participant-${participant.sid}`
+  );
+  participantVideo.remove();
   console.log("participant disconnected");
 }

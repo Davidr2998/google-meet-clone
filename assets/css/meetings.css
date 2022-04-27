@@ -30,7 +30,6 @@ body {
   max-width: 720px;
   max-height: 440px;
   border-radius: 30px;
-  background-color: var(--loading-black);
 }
 
 .video-participants {
@@ -60,7 +59,6 @@ body {
 .participant-video {
   width: 100%;
   aspect-ratio: 16/9;
-  background-color: #ffcc1a;
 }
 
 .participant-video video {

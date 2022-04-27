@@ -4,28 +4,33 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Google Meet Clone</title>
-    <link rel="stylesheet" href="./css/styles.css" />
+    <title>TMChat🎙️ - Talk anytime, anywhere</title>
+    <link rel="stylesheet" href="./css/homepage.css" />
   </head>
   <body>
-    <h1>Google Meet</h1>
-    <form id="form">
-      Name: <input id="username" placeholder="Type your username..." />
-      <button id="join">Join Call</button>
-    </form>
-    <p id="count"></p>
-    <div id="container">
-      <div id="local" class="participant">
-        <div id="local-video"></div>
-        <div>Yo</div>
-      </div>
-      <!-- al resto de participantes -->
-    </div>
+    <div class="main-container">
+      <form class="panel" id="form">
+        <h1>TMChat🎙️</h1>
+        <h4>Talk anytime, anywhere</h4>
+        <div class="input-container">
+          <label for="username">Username</label>
+          <input
+            class="input-text"
+            id="username"
+            autocomplete="off"
+            required
+            placeholder="Type your username..."
+          />
+        </div>
 
-    <script
-      defer
-      src="https://sdk.twilio.com/js/video/releases/2.21.0/twilio-video.min.js"
-    ></script>
+        <button class="button" id="join">
+          <div class="icon">
+            <span>🚀</span>
+          </div>
+          <p>Join Call</p>
+        </button>
+      </form>
+    </div>
     <script defer src="./app.js"></script>
   </body>
 </html>

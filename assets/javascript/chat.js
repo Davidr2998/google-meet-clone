@@ -2,9 +2,9 @@ let chatService;
 let generalChannel;
 let room;
 
-const username = localStorage.getItem("username")
+/* const username = localStorage.getItem("username")
   ? localStorage.getItem("username")
-  : "Anonymous";
+  : "Anonymous"; */
 
 async function connect({ username }) {
   const response = await fetch("/get_token", {
@@ -16,10 +16,8 @@ async function connect({ username }) {
   });
 
   const data = await response.json();
-  console.log(data);
 
   room = await Twilio.Chat.Client.create(data.token);
-  console.log(room);
   chatClient = room;
   await chatClient.getSubscribedChannels();
   joinGeneralChannel();
@@ -33,7 +31,6 @@ async function joinGeneralChannel() {
     const channel = await chatClient.getChannelByUniqueName("miduroom");
     generalChannel = channel;
     console.log("found general chat");
-    console.log(generalChannel);
     setupChannel();
   } catch (error) {
     console.log("could not find general chat");
@@ -42,7 +39,6 @@ async function joinGeneralChannel() {
       friendlyName: "General Chat",
     });
     console.log("Created general channel");
-    console.log(createGeneral);
     generalChannel = createGeneral;
     setupChannel();
   }
@@ -68,8 +64,6 @@ function messageAddedToChannel(message) {
 
 const messageInput = document.getElementById("message-input");
 const chatButton = document.getElementById("chat-button");
-
-console.log(messageInput.value);
 
 chatButton.addEventListener("click", () => {
   generalChannel.sendMessage(messageInput.value);

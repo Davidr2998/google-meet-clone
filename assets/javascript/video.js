@@ -79,25 +79,21 @@ async function participantConnected(participant) {
               </div>
             </div>`;
 
-  // $videoParticipants.innerHTML += template;
-  $container.insertAdjacentHTML("beforeend", template);
-
-  console.log("KILL ME PLS", participant.tracks);
+  await $container.insertAdjacentHTML("beforeend", template);
 
   participant.tracks.forEach((localTrackPublication) => {
     const { isSubscribed, track } = localTrackPublication;
     if (isSubscribed) attachTrack(track);
   });
 
-  participant.on("trackSubscribed", attachTrack);
+  participant.on("trackSubscribed", (track) => attachTrack(track, participant));
   participant.on("trackUnsubscribed", (track) => track.detach());
   updateParticipantCount();
 }
 
-function attachTrack(track) {
-  console.log("user track", track);
+async function attachTrack(track, participant) {
   const $video = $container.querySelector(
-    `.participant:last-child .participant-video`
+    `#participant-${participant.sid} .participant-video`
   );
 
   console.log("TEST", $video);

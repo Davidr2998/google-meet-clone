@@ -2,9 +2,9 @@ let chatService;
 let generalChannel;
 let room;
 
-const username = localStorage.getItem("username")
+/* const username = localStorage.getItem("username")
   ? localStorage.getItem("username")
-  : "Anonymous";
+  : "Anonymous"; */
 
 async function connect({ username }) {
   const response = await fetch("/get_token", {

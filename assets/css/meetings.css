@@ -54,14 +54,17 @@ body {
 
 .participant {
   width: 200px;
-  height: 250px;
   text-align: center;
 }
 
 .participant-video {
   width: 100%;
-  height: 75%;
+  aspect-ratio: 16/9;
   background-color: #ffcc1a;
+}
+
+.participant-video video {
+  height: 100%;
   border-radius: 20px;
 }
 

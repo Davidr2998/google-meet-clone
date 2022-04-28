@@ -1,17 +1,18 @@
 const $ = (selector) => document.querySelector(selector);
 
+const $count = $("#participant-counter");
 const $container = $("#participant-list");
 
 let connected = false;
 const username = sessionStorage.getItem("username")
   ? sessionStorage.getItem("username")
-  : (window.location = "homepage.html");
+  : (window.location = "index.html");
 let meetingRoom;
 
 async function addLocalVideo() {
-  const $localVideo = document.getElementById("local-video");
-  const $participantContainer = document.getElementById(
-    "participant-container"
+  const $localVideo = document.querySelector("#local-video");
+  const $participantContainer = document.querySelector(
+    "#participant-container"
   );
   const track = await Twilio.Video.createLocalVideoTrack();
   $localVideo
@@ -60,8 +61,7 @@ function disconnect() {
 }
 
 function updateParticipantCount() {
-  console.log(`${meetingRoom.participants.size + 1} online users`);
-  /* $count.innerHTML = `${meetingRoom.participants.size + 1} online users`; */
+  $count.innerHTML = `${meetingRoom.participants.size + 1} online users`;
 }
 
 function participantConnected(participant) {

@@ -9,15 +9,34 @@ const username = sessionStorage.getItem("username")
   : (window.location = "index.html");
 let meetingRoom;
 
+function meetingControls() {
+  const controlDiv = document.createElement("div");
+
+  const controlTemplate = `<button id="mute-button" class="button">Mute</button>
+    <button id="video-button" class="button">Video</button>
+    <button id="disconnect-button" class="button disconnect">Disconnect</button>
+  `;
+  controlDiv.innerHTML = controlTemplate;
+  return controlDiv;
+}
+
 async function addLocalVideo() {
-  const $localVideo = document.querySelector("#local-video");
+  const $localVideo = $("#local-video");
+
   const $participantContainer = document.querySelector(
     "#participant-container"
   );
   const track = await Twilio.Video.createLocalVideoTrack();
-  $localVideo
+  /* $localVideo
     .insertBefore(track.attach(), $participantContainer)
+    .classList.add("video-webcam") */ $localVideo
+    .appendChild(track.attach())
     .classList.add("video-webcam");
+
+  const $localUserVideo = $(".video-webcam");
+  const controls = meetingControls();
+
+  $localVideo.appendChild(controls);
 }
 
 addLocalVideo();

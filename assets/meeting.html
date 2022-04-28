@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/meetings.css" />
-    <title>Document</title>
+    <title>TMChat🎙️ - Talk anytime, anywhere</title>
   </head>
   <body>
     <div class="container">
       <div class="video-container" id="local-video">
-        <!-- <div class="video-webcam"></div> -->
+        <!-- Your camera goes here -->
         <div class="video-participants" id="participant-container">
           <div class="video-participant-layout" id="participant-list">
             <!-- Participants go here -->
@@ -18,15 +18,20 @@
         </div>
       </div>
       <div class="chat-container">
-        <div class="chat-messages"></div>
+        <h3 class="participant-counter" id="participant-counter"></h3>
+        <div class="chat-messages">
+          <div class="chat-message-layout" id="chat-messages-list">
+            <!-- Messages go here -->
+          </div>
+        </div>
         <div class="chat-input">
-          <textarea
+          <input
+            required
+            type="text"
             class="chat-textarea"
-            name=""
+            placeholder="Type your message here..."
             id="message-input"
-            rows="3"
-            maxlength="250"
-          ></textarea>
+          />
           <button id="chat-button">
             <img src="./static/send-icon.svg" alt="" />
           </button>

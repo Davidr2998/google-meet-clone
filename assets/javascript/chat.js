@@ -1,3 +1,5 @@
+const messageList = document.querySelector("#chat-messages-list");
+
 let chatService;
 let generalChannel;
 let room;
@@ -58,16 +60,62 @@ function disconnect() {
 }
 
 function messageAddedToChannel(message) {
-  console.log("message added to channel");
-  console.log(message.author, message.body);
+  const template = `<div class="message-card">
+    <h4 class="message-card-author">${message.author}</h4>
+    <p class="message-card-body">
+      ${message.body}
+    </p>
+  </div>`;
+  messageList.insertAdjacentHTML("beforeend", template);
+  autoscroll();
 }
+
+/* chat input logic */
 
 const messageInput = document.getElementById("message-input");
 const chatButton = document.getElementById("chat-button");
 
 chatButton.addEventListener("click", () => {
+  if (messageInput.value === "") {
+    return;
+  }
   generalChannel.sendMessage(messageInput.value);
   messageInput.value = "";
 });
 
+messageInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    if (generalChannel === undefined) {
+      alert(
+        "The Chat Service is not configured. Please check your room has been configured."
+      );
+      return;
+    }
+    if (messageInput.value === "") {
+      return;
+    }
+    generalChannel.sendMessage(messageInput.value);
+    messageInput.value = "";
+  }
+});
+
 window.addEventListener("beforeunload", disconnect);
+/* End of chat input logic */
+
+// Auto scroll script
+function autoscroll() {
+  const $newMessage = messageList.lastElementChild;
+  const newMessageStyles = getComputedStyle($newMessage);
+  const newMessageMargin = parseInt(newMessageStyles.marginBottom);
+  const newMessageHeight = $newMessage.offsetHeight + newMessageMargin + 5;
+
+  const visibleHeight = messageList.offsetHeight;
+
+  const containerHeight = messageList.scrollHeight;
+
+  const scrollOffset = messageList.scrollTop + visibleHeight;
+
+  if (containerHeight - newMessageHeight <= scrollOffset) {
+    messageList.scrollTop = messageList.scrollHeight;
+  }
+}

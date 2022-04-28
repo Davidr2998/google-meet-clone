@@ -72,8 +72,8 @@ function messageAddedToChannel(message) {
 
 /* chat input logic */
 
-const messageInput = document.getElementById("message-input");
-const chatButton = document.getElementById("chat-button");
+const messageInput = document.querySelector("#message-input");
+const chatButton = document.querySelector("#chat-button");
 
 chatButton.addEventListener("click", () => {
   if (messageInput.value === "") {

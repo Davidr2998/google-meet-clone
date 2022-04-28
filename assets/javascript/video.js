@@ -10,9 +10,9 @@ const username = sessionStorage.getItem("username")
 let meetingRoom;
 
 async function addLocalVideo() {
-  const $localVideo = document.getElementById("local-video");
-  const $participantContainer = document.getElementById(
-    "participant-container"
+  const $localVideo = document.querySelector("#local-video");
+  const $participantContainer = document.querySelector(
+    "#participant-container"
   );
   const track = await Twilio.Video.createLocalVideoTrack();
   $localVideo

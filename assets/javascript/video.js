@@ -9,33 +9,33 @@ const username = sessionStorage.getItem("username")
   : (window.location = "index.html");
 let meetingRoom;
 
+let ismuted = false;
+let cameraDisabled = false;
+
 function meetingControls() {
   const controlDiv = document.createElement("div");
-
-  const controlTemplate = `<button id="mute-button" class="button">Mute</button>
-    <button id="video-button" class="button">Video</button>
-    <button id="disconnect-button" class="button disconnect">Disconnect</button>
+  const controlTemplate = `
+  <button id="mute-button" class="button" onclick="muteAudio()">
+    <img src="../static/mute.svg" alt="mute">
+  </button>
+  <button id="video-button" class="button">
+    <img src="../static/disable-camera.svg" alt="mute" onclick="disableVideo()">  
+  </button>
+  <button id="disconnect-button" class="button disconnect" onclick="disconnectFromMeeting()">
+    <img src="../static/disconnect.svg" alt="mute">
+  </button>
   `;
   controlDiv.innerHTML = controlTemplate;
+  controlDiv.classList.add("meeting-controls");
+
   return controlDiv;
 }
 
 async function addLocalVideo() {
   const $localVideo = $("#local-video");
-
-  const $participantContainer = document.querySelector(
-    "#participant-container"
-  );
   const track = await Twilio.Video.createLocalVideoTrack();
-  /* $localVideo
-    .insertBefore(track.attach(), $participantContainer)
-    .classList.add("video-webcam") */ $localVideo
-    .appendChild(track.attach())
-    .classList.add("video-webcam");
-
-  const $localUserVideo = $(".video-webcam");
+  $localVideo.appendChild(track.attach()).classList.add("video-webcam");
   const controls = meetingControls();
-
   $localVideo.appendChild(controls);
 }
 
@@ -104,9 +104,7 @@ function participantConnected(participant) {
 }
 
 function attachTrack(track, participant) {
-  const $video = $container.querySelector(
-    `#participant-${participant.sid} .participant-video`
-  );
+  const $video = $(`#participant-${participant.sid} .participant-video`);
 
   $video.appendChild(track.attach()).classList.add("participant-video");
 }
@@ -117,9 +115,43 @@ async function detachTrack(track) {
 }
 
 function participantDisconnected(participant) {
-  const participantVideo = document.querySelector(
-    `#participant-${participant.sid}`
-  );
+  const participantVideo = $(`#participant-${participant.sid}`);
   participantVideo.remove();
   console.log("participant disconnected");
+}
+
+function muteAudio() {
+  /* console.log(meetingRoom); */
+  const muteButton = $("#mute-button");
+  meetingRoom.localParticipant.audioTracks.forEach(({ track }) => {
+    if (ismuted) {
+      track.enable();
+      ismuted = false;
+      muteButton.classList.remove("disconnect");
+    } else {
+      track.disable();
+      ismuted = true;
+      muteButton.classList.add("disconnect");
+    }
+  });
+}
+
+function disconnectFromMeeting() {
+  disconnect();
+  window.location = "index.html";
+}
+
+function disableVideo() {
+  const videoButton = $("#video-button");
+  meetingRoom.localParticipant.videoTracks.forEach(({ track }) => {
+    if (cameraDisabled) {
+      track.enable();
+      cameraDisabled = false;
+      videoButton.classList.remove("disconnect");
+    } else {
+      track.disable();
+      cameraDisabled = true;
+      videoButton.classList.add("disconnect");
+    }
+  });
 }

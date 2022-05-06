@@ -28,8 +28,16 @@ body {
   justify-content: space-around;
 }
 
+.video-and-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
 .video-webcam {
-  width: 50%;
+  width: 100%;
   aspect-ratio: 16/9;
   place-self: center;
   max-width: 720px;
@@ -175,4 +183,37 @@ body {
 .chat-input button img {
   width: 20px;
   height: 20px;
+}
+
+.meeting-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  text-align: center;
+  background-color: var(--loading-black);
+  cursor: pointer;
+}
+
+.button:hover img {
+  filter: invert(0);
+  transition: all 0.1s ease-in;
+}
+
+.button img {
+  width: 24px;
+  filter: invert(1);
+}
+
+.disconnect {
+  background-color: #fe2323;
 }
